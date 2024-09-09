@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 
 interface Game {
@@ -25,31 +26,31 @@ function App() {
   if (error) return <p>{error}</p>;
 
   return (
-   <div className="p-4">
-  <h1 className="text-center text-4xl font-bold mb-8">Games</h1>
-  <div className="grid grid-cols-3 gap-6">
-    {games.map((game) => (
-      <div
-        key={game.id}
-        className="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden shadow-lg p-4 transition-transform hover:scale-105"
-      >
-        <img
-          src={game.background_image}
-          alt={game.name}
-          className="w-full h-48 object-cover rounded-lg"
-        />
-        <div className="mt-4">
-          <h3 className="text-lg font-semibold text-white">{game.name}</h3>
-          <div className="mt-2">
-            <Button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full">
-              Click me
-            </Button>
-          </div>
+   <>
+      
+      <div className="p-4">
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {games.map((game) => (
+            <Card key={game.id} className="transition-transform hover:scale-105">
+              <CardHeader>
+                <img
+                  src={game.background_image}
+                  alt={game.name}
+                  className="w-full h-48 object-cover rounded-lg"
+                />
+              </CardHeader>
+              <CardContent>
+                <CardTitle>{game.name}</CardTitle>
+                <CardDescription>Game description or details here</CardDescription>
+              </CardContent>
+              <CardFooter>
+                <Button variant={"outline"}>Click me</Button>
+              </CardFooter>
+            </Card>
+          ))}
         </div>
       </div>
-    ))}
-  </div>
-</div>
+    </>
   );
 }
 
