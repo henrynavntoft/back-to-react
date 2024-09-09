@@ -1,7 +1,7 @@
 import { ModeToggle } from "./modeToggle"
 
 
-function Footer () {
+function Header () {
   return (
   <div className="p-4">
         <ModeToggle />
@@ -9,4 +9,4 @@ function Footer () {
   )
 }
 
-export default Footer
+export default Header
