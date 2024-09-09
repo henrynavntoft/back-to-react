@@ -6,10 +6,10 @@ import axios from "axios";
 const APIClient = axios.create({ 
   baseURL: "https://api.rawg.io/api",
   params: {
-    key: import.meta.env.API_KEY
+    key: import.meta.env.VITE_API_KEY
   }
-
 });
+
 
 interface Game {
   id: number;
@@ -17,18 +17,24 @@ interface Game {
   background_image: string;
 }
 
+interface GameResponse {
+  count: number;
+  results: Game[];
+}
+
 function App() {
   const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetch(`https://api.rawg.io/api/games?key=${import.meta.env.VITE_API_KEY}`)
-      .then((response) => response.json())
-      .then((data) => setGames(data.results))
+  useEffect (() => {
+    APIClient.get<GameResponse>("/games")
+      .then((response) => setGames(response.data.results))
       .catch(() => setError("Failed to fetch games"))
       .finally(() => setLoading(false));
-  }, []);
+  }
+  , []);
+
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
