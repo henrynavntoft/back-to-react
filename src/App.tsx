@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import axios from "axios";
 
+const APIClient = axios.create({ 
+  baseURL: "https://api.rawg.io/api",
+  params: {
+    key: import.meta.env.API_KEY
+  }
+
+});
 
 interface Game {
   id: number;
@@ -15,7 +23,7 @@ function App() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch(`https://api.rawg.io/api/games?key=105838db2dd441ef9d6b6f7a76693869`)
+    fetch(`https://api.rawg.io/api/games?key=${import.meta.env.VITE_API_KEY}`)
       .then((response) => response.json())
       .then((data) => setGames(data.results))
       .catch(() => setError("Failed to fetch games"))
